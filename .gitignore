@@ -1,0 +1,7 @@
+# Secrets and local settings: only .env.example is tracked
+.env
+.env.*
+!.env.example
+*.log
+.idea/
+.vscode/

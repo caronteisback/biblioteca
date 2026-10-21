@@ -1,0 +1,50 @@
+# The whole library system: database, API and panel. Start it with:  docker compose up --build
+#
+# Each piece is built from its own repository at a fixed tag, so what you run is what that tag released.
+# To build from folders on your machine instead (for example while developing a piece), set in .env:
+#   API_SOURCE=../biblioteca-java
+#   WEB_SOURCE=../biblioteca-web
+
+services:
+  oracle:
+    image: ${ORACLE_IMAGE:-gvenzl/oracle-xe:21-slim-faststart}
+    environment:
+      # SYS/SYSTEM password: used only by the container, never by the application.
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:?Copy .env.example to .env and set ORACLE_PASSWORD}
+      # Application schema, created in XEPDB1 on the first start. The API connects as this user.
+      APP_USER: ${APP_USER:?Copy .env.example to .env and set APP_USER}
+      APP_USER_PASSWORD: ${APP_USER_PASSWORD:?Copy .env.example to .env and set APP_USER_PASSWORD}
+    # No published port: the database is reachable only by the API, on the compose network.
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  api:
+    build: ${API_SOURCE:-https://github.com/caronteisback/biblioteca-java.git#v0.2.0}
+    environment:
+      # prod: everything comes from the environment. demo: loads a made-up library into an empty catalog.
+      SPRING_PROFILES_ACTIVE: prod,demo
+      DB_URL: jdbc:oracle:thin:@//oracle:1521/XEPDB1
+      APP_USER: ${APP_USER}
+      APP_USER_PASSWORD: ${APP_USER_PASSWORD}
+    # No published port: the browser reaches the API through the panel's nginx (same origin, so no CORS).
+    depends_on:
+      oracle:
+        condition: service_healthy
+
+  web:
+    build: ${WEB_SOURCE:-https://github.com/caronteisback/biblioteca-web.git#v0.1.1}
+    ports:
+      # Loopback only: the panel has no login yet and must not be exposed to a network.
+      - "127.0.0.1:${WEB_PORT:-8081}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  oracle-data:
