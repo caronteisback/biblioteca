@@ -42,7 +42,7 @@ services:
         condition: service_healthy
 
   web:
-    build: ${WEB_SOURCE:-https://github.com/caronteisback/biblioteca-web.git#v0.2.1}
+    build: ${WEB_SOURCE:-https://github.com/caronteisback/biblioteca-web.git#v0.2.2}
     ports:
       # Loopback only: this is plain HTTP, so the password and the token would travel in clear on a network.
       # Put HTTPS in front before exposing it.
