@@ -38,6 +38,13 @@ The example values in `.env.example` are fine for a demo on your own machine: th
 
 20 books with their copies and 8 members, with loans in every state: due soon, renewed, overdue, returned late with a **pending fine** (that member cannot borrow), returned late and paid, a deactivated member and a retired copy. Try lending a copy, renewing the overdue loan (it is refused, and the panel says why) or paying the fine.
 
+### If something goes wrong
+
+- **`failed to execute bake`** while building: some Docker Desktop versions fail to hand a build from a Git address to the new builder. Use the classic one: `COMPOSE_BAKE=false docker compose up --build`.
+- **Docker Hub pull limits** on the Oracle image: set `ORACLE_IMAGE=ghcr.io/gvenzl/oracle-xe:21-slim-faststart` in `.env`.
+- **Port 8081 is taken**: change `WEB_PORT` in `.env`.
+- **Start again from nothing** (database included): `docker compose down -v`.
+
 ## The pieces
 
 | Repository | What it is | Version |
