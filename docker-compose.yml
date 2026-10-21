@@ -25,22 +25,27 @@ services:
       start_period: 30s
 
   api:
-    build: ${API_SOURCE:-https://github.com/caronteisback/biblioteca-java.git#v0.2.0}
+    build: ${API_SOURCE:-https://github.com/caronteisback/biblioteca-java.git#v0.3.1}
     environment:
       # prod: everything comes from the environment. demo: loads a made-up library into an empty catalog.
       SPRING_PROFILES_ACTIVE: prod,demo
       DB_URL: jdbc:oracle:thin:@//oracle:1521/XEPDB1
       APP_USER: ${APP_USER}
       APP_USER_PASSWORD: ${APP_USER_PASSWORD}
+      # The key that signs the sign-in tokens (at least 32 characters). Without it the API does not start.
+      JWT_SECRET: ${JWT_SECRET:?Copy .env.example to .env and set JWT_SECRET}
+      # Password of the three demo accounts (at least 12 characters). Only the demo profile reads it.
+      BIBLIOTECA_DEMO_PASSWORD: ${DEMO_PASSWORD:?Copy .env.example to .env and set DEMO_PASSWORD}
     # No published port: the browser reaches the API through the panel's nginx (same origin, so no CORS).
     depends_on:
       oracle:
         condition: service_healthy
 
   web:
-    build: ${WEB_SOURCE:-https://github.com/caronteisback/biblioteca-web.git#v0.1.1}
+    build: ${WEB_SOURCE:-https://github.com/caronteisback/biblioteca-web.git#v0.2.1}
     ports:
-      # Loopback only: the panel has no login yet and must not be exposed to a network.
+      # Loopback only: this is plain HTTP, so the password and the token would travel in clear on a network.
+      # Put HTTPS in front before exposing it.
       - "127.0.0.1:${WEB_PORT:-8081}:8080"
     depends_on:
       api:
