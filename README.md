@@ -6,7 +6,7 @@
 ![React 19](https://img.shields.io/badge/React-19-61DAFB)
 ![Oracle XE 21c](https://img.shields.io/badge/Oracle-XE%2021c-red)
 
-A small library system built end to end: a **REST API** with its rules enforced by the database, **sign-in with JWT and two roles**, a **shared API contract**, and a **React panel** for librarians and members. This repository is the front door of the project: it starts everything with one command and explains how the pieces fit.
+A small library system built end to end: a **REST API** with its rules enforced by the database, **sign-in with JWT and two roles**, a **shared API contract**, and a **React panel** for librarians and members, with a side menu and a light and a dark theme. This repository is the front door of the project: it starts everything with one command and explains how the pieces fit.
 
 > All data in this project is fictional. It is a portfolio project and is not related to any real organization.
 
@@ -62,7 +62,7 @@ The password of all three is the `DEMO_PASSWORD` of your `.env` (`change_me_demo
 | Repository | What it is | Version |
 |------------|------------|---------|
 | [biblioteca-java](https://github.com/caronteisback/biblioteca-java) | The API: Java 17, Spring Boot 4, JPA and Oracle XE 21c, JWT and two roles, with 399 tests on a real database | v0.3.1 |
-| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 144 tests including whole journeys for a librarian and a member and an accessibility check of every screen | v0.2.2 |
+| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 184 tests including whole journeys for a librarian and a member, an accessibility check of every screen and of the colours of both themes | v0.3.0 |
 | [biblioteca-contrato](https://github.com/caronteisback/biblioteca-contrato) | The contract: one OpenAPI 3.1 file that the API is tested against and the panel's types are generated from | v0.2.1 |
 
 `docker-compose.yml` builds the API and the panel from their repositories at those tags, so what runs is what each tag released. To build from folders on your machine instead, set `API_SOURCE` and `WEB_SOURCE` in `.env` (see `.env.example`).
