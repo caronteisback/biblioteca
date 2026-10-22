@@ -16,7 +16,7 @@ A small library system built end to end: a **REST API** with its rules enforced 
 |---|---|
 | ![Sign-in](docs/screenshots/login.png) | ![Catalog](docs/screenshots/catalogo.png) |
 | ![A member with a fine](docs/screenshots/socio.png) | ![An overdue loan](docs/screenshots/prestamo.png) |
-| ![Pending fines](docs/screenshots/multas.png) | ![A member's own account](docs/screenshots/mi-cuenta.png) |
+| ![Pending fines](docs/screenshots/multas.png) | ![The home of a member, in the dark theme](docs/screenshots/inicio.png) |
 
 ## Run it
 
@@ -42,8 +42,8 @@ The password of all three is the `DEMO_PASSWORD` of your `.env` (`change_me_demo
 | Account | Role | What to try |
 |---------|------|-------------|
 | `bibliotecaria@example.org` | Librarian | The whole panel: lend a copy, renew the overdue loan (it is refused, and the panel says why), pay a fine |
-| `mateo.quispe@example.org` | Member | "Mi cuenta": a score of 79 and a **pending fine**. The catalog is read-only; the librarian screens answer "Sin permiso" |
-| `rosa.valdivia@example.org` | Member | "Mi cuenta": an **overdue loan** |
+| `mateo.quispe@example.org` | Member | "Inicio": a score of 79 ("En riesgo") and a **pending fine** that blocks new loans. The catalog is read-only; the librarian screens answer "Sin permiso" |
+| `rosa.valdivia@example.org` | Member | "Inicio": a score of 86 and an **overdue loan**, named by its book |
 
 ### What is in the demo
 
@@ -61,9 +61,9 @@ The password of all three is the `DEMO_PASSWORD` of your `.env` (`change_me_demo
 
 | Repository | What it is | Version |
 |------------|------------|---------|
-| [biblioteca-java](https://github.com/caronteisback/biblioteca-java) | The API: Java 17, Spring Boot 4, JPA and Oracle XE 21c, JWT and two roles, with 399 tests on a real database | v0.3.1 |
-| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 192 tests including whole journeys for a librarian and a member, an accessibility check of every screen and of the colours of both themes | v0.3.0 |
-| [biblioteca-contrato](https://github.com/caronteisback/biblioteca-contrato) | The contract: one OpenAPI 3.1 file that the API is tested against and the panel's types are generated from | v0.2.1 |
+| [biblioteca-java](https://github.com/caronteisback/biblioteca-java) | The API: Java 17, Spring Boot 4, JPA and Oracle XE 21c, JWT and two roles, with 403 tests on a real database | v0.4.0 |
+| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 238 tests including whole journeys for a librarian and a member, an accessibility check of every screen and of the colours of both themes | v0.4.0 |
+| [biblioteca-contrato](https://github.com/caronteisback/biblioteca-contrato) | The contract: one OpenAPI 3.1 file that the API is tested against and the panel's types are generated from | v0.3.0 |
 
 `docker-compose.yml` builds the API and the panel from their repositories at those tags, so what runs is what each tag released. To build from folders on your machine instead, set `API_SOURCE` and `WEB_SOURCE` in `.env` (see `.env.example`).
 
