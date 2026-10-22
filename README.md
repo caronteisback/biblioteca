@@ -6,7 +6,7 @@
 ![React 19](https://img.shields.io/badge/React-19-61DAFB)
 ![Oracle XE 21c](https://img.shields.io/badge/Oracle-XE%2021c-red)
 
-A small library system built end to end: a **REST API** with its rules enforced by the database, **sign-in with JWT and two roles**, a **shared API contract**, and a **React panel** for librarians and members, with a side menu and a light and a dark theme. This repository is the front door of the project: it starts everything with one command and explains how the pieces fit.
+A small library system built end to end: a **REST API** with its rules enforced by the database, **sign-in with JWT and two roles**, a **shared API contract**, and a **React panel** for librarians and members, with a home for each role (what needs doing today for the librarian, how they stand for the member), a side menu and a light and a dark theme. This repository is the front door of the project: it starts everything with one command and explains how the pieces fit.
 
 > All data in this project is fictional. It is a portfolio project and is not related to any real organization.
 
@@ -14,9 +14,10 @@ A small library system built end to end: a **REST API** with its rules enforced 
 
 | | |
 |---|---|
-| ![Sign-in](docs/screenshots/login.png) | ![Catalog](docs/screenshots/catalogo.png) |
-| ![A member with a fine](docs/screenshots/socio.png) | ![An overdue loan](docs/screenshots/prestamo.png) |
-| ![Pending fines](docs/screenshots/multas.png) | ![The home of a member, in the dark theme](docs/screenshots/inicio.png) |
+| ![Sign-in](docs/screenshots/login.png) | ![The librarian's home](docs/screenshots/panel.png) |
+| ![Catalog](docs/screenshots/catalogo.png) | ![A member with a fine](docs/screenshots/socio.png) |
+| ![An overdue loan](docs/screenshots/prestamo.png) | ![Pending fines](docs/screenshots/multas.png) |
+| ![The home of a member, in the dark theme](docs/screenshots/inicio.png) | ![The librarian's home on a phone](docs/screenshots/movil.png) |
 
 ## Run it
 
@@ -41,13 +42,13 @@ The password of all three is the `DEMO_PASSWORD` of your `.env` (`change_me_demo
 
 | Account | Role | What to try |
 |---------|------|-------------|
-| `bibliotecaria@example.org` | Librarian | The whole panel: lend a copy, renew the overdue loan (it is refused, and the panel says why), pay a fine |
+| `bibliotecaria@example.org` | Librarian | "Inicio": the loans to chase first, the pending fine, loans per week and the most borrowed books. Then the whole panel: lend a copy, renew the overdue loan (it is refused, and the panel says why), pay a fine |
 | `mateo.quispe@example.org` | Member | "Inicio": a score of 79 ("En riesgo") and a **pending fine** that blocks new loans. The catalog is read-only; the librarian screens answer "Sin permiso" |
 | `rosa.valdivia@example.org` | Member | "Inicio": a score of 86 and an **overdue loan**, named by its book |
 
 ### What is in the demo
 
-20 books with their copies and 8 members, with loans in every state: due soon, renewed, overdue, returned late with a **pending fine** (that member cannot borrow), returned late and paid, a deactivated member and a retired copy.
+20 books with their copies and 8 members, with loans in every state: due soon, renewed, overdue, returned late with a **pending fine** (that member cannot borrow), returned late and paid, a deactivated member and a retired copy. It also has a history of 19 loans returned on time over the last six weeks, so the librarian's home has bars and a ranking to show.
 
 ### If something goes wrong
 
@@ -61,8 +62,8 @@ The password of all three is the `DEMO_PASSWORD` of your `.env` (`change_me_demo
 
 | Repository | What it is | Version |
 |------------|------------|---------|
-| [biblioteca-java](https://github.com/caronteisback/biblioteca-java) | The API: Java 17, Spring Boot 4, JPA and Oracle XE 21c, JWT and two roles, with 403 tests on a real database | v0.4.0 |
-| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 238 tests including whole journeys for a librarian and a member, an accessibility check of every screen and of the colours of both themes | v0.4.0 |
+| [biblioteca-java](https://github.com/caronteisback/biblioteca-java) | The API: Java 17, Spring Boot 4, JPA and Oracle XE 21c, JWT and two roles, with 417 tests on a real database | v0.5.0 |
+| [biblioteca-web](https://github.com/caronteisback/biblioteca-web) | The panel: React, TypeScript and Vite, with 260 tests including whole journeys for a librarian and a member, an accessibility check of every screen and of the colours of both themes | v0.5.0 |
 | [biblioteca-contrato](https://github.com/caronteisback/biblioteca-contrato) | The contract: one OpenAPI 3.1 file that the API is tested against and the panel's types are generated from | v0.3.0 |
 
 `docker-compose.yml` builds the API and the panel from their repositories at those tags, so what runs is what each tag released. To build from folders on your machine instead, set `API_SOURCE` and `WEB_SOURCE` in `.env` (see `.env.example`).
